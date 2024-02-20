@@ -1,0 +1,135 @@
+<?php
+           
+           if(!isset($_GET['product_id'])){
+             
+             $per_page = 1;
+             
+             if(!isset($_GET['page'])){
+
+               $page = $_GET['page'];
+
+             }else{
+
+                 $page = 1;
+             }
+
+               
+
+               $start_from = ($page-1) * $per_page;
+
+               $get_products = "select * from products order by 1 DESC LIMIT $start_from,$per_page";
+
+               $run_products = mysqli_query($con,$get_products);
+
+               while($row_products = mysqli_fetch_array($run_products)){
+
+                 $pro_id = $row_products['product_id'];
+
+                 $pro_title = $row_products['product_title'];
+
+                 $pro_img1 = $row_products['product_img1'];
+
+                 echo "
+     
+                     <div class='col-xl-4 col-md-6 portfolio-item filter-books'>
+                     <div class='portfolio-wrap'>
+                       <a href='admin_area/product_images/$pro_img1' data-gallery='portfolio-gallery-app' class='glightbox'>
+                       <img src='admin_area/product_images/$pro_img1' class='img-fluid' alt=''></a>
+                       <div class='portfolio-info'>
+                         <p style = 'font-size: 13pt; color: black; text-align:center; padding-left: 30px; padding-bottom: 10px;'>
+                         $pro_title</p>
+                         <h4><a href='details.php?pro_id=$pro_id' class='btn' title='More Details'>View Details</a></h4>
+                         
+                       </div>
+                     </div>
+                   </div><!-- End Portfolio Item -->
+
+  
+
+
+       
+                 ";
+                 
+               }
+
+             
+      
+      ?>
+       
+     </div><!-- End Portfolio Container -->
+
+   </div>
+
+   <center>
+   <nav aria-label="Page navigation example">
+     <ul class="pagination justify-content-center">
+   
+     
+             <?php
+
+             $query = "select * from products";
+
+             $result = mysqli_query($con,$query);
+
+             $total_records = mysqli_num_rows($result);
+
+             $total_pages = ceil($total_records / $per_page);
+
+             echo "
+
+                   <li class='page-item'>
+
+                     <a class='page-link'  href='index.php?page=1'> ".'First Page'." </a>
+
+                   </li>
+
+             ";
+             for($i = 1; $i <= $total_pages; $i++){
+
+               echo "
+             
+                   <li class='page-item'>
+
+                     <a class='page-link' href='index.php?page=".$i."'> ".$i." </a>
+
+                   </li>
+
+                 ";
+             };
+
+             echo "
+             
+                   <li class='page-item'>
+
+                     <a class='page-link' href='index.php?page=$total_pages'> ".'Last Page'." </a>
+
+                   </li>
+
+             ";
+             
+           }
+
+             ?>
+
+
+     </ul>
+   </nav>
+
+ </center>
+
+
+
+
+
+ <center>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item "><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </nav>
+
+      </center>
